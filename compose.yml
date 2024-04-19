@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  database:
+    image: mysql:8.3.0
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE
+      - MYSQL_ROOT_PASSWORD
+    ports:
+      - "3306:3306"
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-p$$MYSQL_ROOT_PASSWORD" ]
+      timeout: 20s
+      interval: 5s
+      retries: 10
+  tomcat:
+    image: slawekludwiczak/readstack
+    container_name: readstack
+    ports:
+      - "8080:8080"
+    environment:
+      - MYSQL_DATABASE
+      - MYSQL_ROOT_PASSWORD
+      - "DB_INIT=true"
+      - "JAVA_OPTS=-Ddb_username=root -Ddb_password=$$MYSQL_ROOT_PASSWORD -Ddb_host=database -Ddb_database=$$MYSQL_DATABASE"
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: curl --fail http://localhost:8080 || exit 1
+      interval: 5s
+      retries: 5
+      start_period: 5s
+      timeout: 10s
+
+volumes:
+  mysql:
