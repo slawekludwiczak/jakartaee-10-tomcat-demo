@@ -17,5 +17,9 @@ JAVA_OPTS=-Ddb_username=<dbuser> -Ddb_password=<dbpass> -Ddb_host=<dbhost> -Ddb_
 ## How to run this app
 
 ```shell
-docker compose up
+docker compose up -d
 ```
+
+![homepage](docs/img/readstack_home.png)
+
+![login form](docs/img/readstack_login.png)
