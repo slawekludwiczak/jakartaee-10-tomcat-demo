@@ -3,11 +3,16 @@
 ## Tech stack
 
 Demo WebApp with basic Jakarta EE 10 stack.
+
+If you want to create it step by step, you will find it in my tutorial on https://javastart.pl/kurs/technologie-webowe
+
 Web layer: Servlets, JSP, JSTL, EL, HTML, CSS with Flexbox
+
 Database layer: JDBC with MySQL
+
 Application provides authentication with form mechanism.
 
-Application uses `war` packaging and is deployed on Tomcat10.
+Java 17, Maven with `war` packaging, deployed on Tomcat 10.
 
 If you want to run the app locally, without docker, you have to provide additional env variables for database:
 ```
